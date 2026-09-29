@@ -4,7 +4,11 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ## [Não publicado]
 
-## [0.0.2] - 2026-09-29
+### Modificado
+
+- Recriado em SVG o ícone Git usado no container Gitea Classic Toolkit.
+
+## [0.0.2] - 2026-09
 
 ### Adicionado
 

@@ -41,7 +41,7 @@
         {
           "id": "giteaClassicToolkit",
           "title": "%container.giteaClassicToolkit.title%",
-          "icon": "./git-icon.png"
+          "icon": "./icons/git-icon.svg"
         },
         {
           "id": "giteaPullRequestCreation",

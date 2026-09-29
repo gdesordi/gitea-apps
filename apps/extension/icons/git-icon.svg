@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 1254 1254">
+  <defs>
+    <radialGradient id="badge" cx="50%" cy="48%" r="55%">
+      <stop offset="65%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#f8f8f8"/>
+    </radialGradient>
+  </defs>
+  <circle cx="627" cy="627" r="560" fill="url(#badge)" stroke="#d2d4d5" stroke-width="14"/>
+  <path fill="#f34f29" d="M583 239 Q626 202 669 239 L1029 593 Q1065 633 1029 673 L668 1031 Q626 1067 584 1031 L224 674 Q188 634 224 594 Z"/>
+  <g fill="none" stroke="#fff" stroke-width="54">
+    <path d="M471 345 804 643"/>
+    <path d="M624 460V821"/>
+  </g>
+  <g fill="#fff">
+    <circle cx="624" cy="460" r="69"/>
+    <circle cx="804" cy="643" r="69"/>
+    <circle cx="624" cy="821" r="70"/>
+  </g>
+</svg>
