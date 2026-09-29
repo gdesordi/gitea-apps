@@ -14,5 +14,6 @@
   "command.markNotificationAsRead.title": "Marcar notificação como lida",
   "command.loadMoreNotifications.title": "Carregar mais notificações",
   "view.notifications.title": "Notificações",
-  "view.notifications.contextualTitle": "Notificações do Gitea"
+  "view.notifications.contextualTitle": "Notificações do Gitea",
+  "command.openPullRequest.title": "Abrir Pull Request no navegador"
 }

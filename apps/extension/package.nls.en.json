@@ -14,5 +14,6 @@
   "command.markNotificationAsRead.title": "Mark Notification as Read",
   "command.loadMoreNotifications.title": "Load More Notifications",
   "view.notifications.title": "Notifications",
-  "view.notifications.contextualTitle": "Gitea Notifications"
+  "view.notifications.contextualTitle": "Gitea Notifications",
+  "command.openPullRequest.title": "Open Pull Request in Browser"
 }

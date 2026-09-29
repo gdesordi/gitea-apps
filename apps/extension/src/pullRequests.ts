@@ -39,6 +39,26 @@ interface GiteaPullRequest {
   created_at: string;
   user?: { login?: string; username?: string };
   html_url?: string;
+  base?: { sha?: string; ref?: string };
+  head?: { sha?: string; ref?: string };
+}
+
+interface GiteaCommit {
+  sha: string;
+  commit?: { message?: string; author?: { name?: string; date?: string } };
+  author?: { username?: string; login?: string };
+}
+
+interface GiteaChangedFile {
+  filename: string;
+  previous_filename?: string;
+  status: string;
+}
+
+interface GiteaFileContent {
+  type: string;
+  encoding?: string;
+  content?: string;
 }
 
 interface GiteaRepository {
@@ -69,7 +89,10 @@ type PullRequestGroup = 'open' | 'closed';
 
 type PullRequestNode =
   | { kind: 'group'; group: PullRequestGroup; label: string }
-  | { kind: 'pullRequest'; pullRequest: GiteaPullRequest };
+  | { kind: 'pullRequest'; pullRequest: GiteaPullRequest }
+  | { kind: 'details'; section: 'files' | 'commits'; pullRequest: GiteaPullRequest }
+  | { kind: 'file'; file: GiteaChangedFile; pullRequest: GiteaPullRequest; owner: string; repo: string }
+  | { kind: 'commit'; commit: GiteaCommit };
 
 class GiteaPullRequestsApi {
   constructor(
@@ -80,6 +103,10 @@ class GiteaPullRequestsApi {
 
   async getRepository(owner: string, repo: string): Promise<GiteaRepository> {
     return this.request<GiteaRepository>(`repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`);
+  }
+
+  async getPullRequest(owner: string, repo: string, index: number): Promise<GiteaPullRequest> {
+    return this.request<GiteaPullRequest>(`repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/pulls/${index}`);
   }
 
   async getBranches(owner: string, repo: string): Promise<string[]> {
@@ -118,6 +145,37 @@ class GiteaPullRequestsApi {
       method: 'POST',
       body: JSON.stringify(input),
     });
+  }
+
+  async getPullRequestCommits(owner: string, repo: string, index: number): Promise<GiteaCommit[]> {
+    return this.getPages<GiteaCommit[]>(`repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/pulls/${index}/commits`);
+  }
+
+  async getPullRequestFiles(owner: string, repo: string, index: number): Promise<GiteaChangedFile[]> {
+    return this.getPages<GiteaChangedFile[]>(`repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/pulls/${index}/files`);
+  }
+
+  async getFileContent(owner: string, repo: string, filePath: string, ref: string): Promise<string> {
+    const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
+    const file = await this.request<GiteaFileContent>(
+      `repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
+    );
+    if (file.type !== 'file' || file.encoding !== 'base64' || typeof file.content !== 'string') {
+      throw new Error(vscode.l10n.t('The selected file cannot be displayed as text.'));
+    }
+    const content = Buffer.from(file.content.replace(/\s/g, ''), 'base64').toString('utf8');
+    if (content.includes('\0')) throw new Error(vscode.l10n.t('The selected file cannot be displayed as text.'));
+    return content;
+  }
+
+  private async getPages<T extends unknown[]>(path: string): Promise<T> {
+    const results: unknown[] = [];
+    const pageSize = 50;
+    for (let page = 1; ; page += 1) {
+      const result = await this.request<unknown[]>(`${path}?page=${page}&limit=${pageSize}`);
+      results.push(...result);
+      if (result.length < pageSize) return results as T;
+    }
   }
 
   private async request<T>(path: string, init: RequestInit = {}): Promise<T> {
@@ -178,18 +236,45 @@ class PullRequestTreeProvider implements vscode.TreeDataProvider<PullRequestNode
       return item;
     }
 
+    if (node.kind === 'details') {
+      const label = node.section === 'files' ? vscode.l10n.t('Files') : vscode.l10n.t('Commits');
+      const item = new vscode.TreeItem(label, vscode.TreeItemCollapsibleState.Collapsed);
+      item.contextValue = 'pullRequestDetailsGroup';
+      return item;
+    }
+
+    if (node.kind === 'file') {
+      const item = new vscode.TreeItem(node.file.filename, vscode.TreeItemCollapsibleState.None);
+      item.description = vscode.l10n.t(node.file.status);
+      if (node.file.previous_filename) item.tooltip = vscode.l10n.t('Renamed from {0}', node.file.previous_filename);
+      item.contextValue = 'pullRequestChangedFile';
+      const basePath = node.file.previous_filename ?? node.file.filename;
+      if (node.pullRequest.base?.sha && node.pullRequest.head?.sha) {
+        const left = makePullRequestFileUri(node.owner, node.repo, basePath, node.pullRequest.base.sha, 'base', node.file.status === 'added');
+        const right = makePullRequestFileUri(node.owner, node.repo, node.file.filename, node.pullRequest.head.sha, 'head', node.file.status === 'removed');
+        item.command = {
+          command: 'vscode.diff',
+          title: vscode.l10n.t('Compare Pull Request File'),
+          arguments: [left, right, `${basePath} ↔ ${node.file.filename}`],
+        };
+      }
+      return item;
+    }
+
+    if (node.kind === 'commit') {
+      const item = new vscode.TreeItem(node.commit.commit?.message?.split(/\r?\n/, 1)[0] || node.commit.sha.slice(0, 7), vscode.TreeItemCollapsibleState.None);
+      const date = node.commit.commit?.author?.date;
+      const author = node.commit.author?.username ?? node.commit.author?.login ?? node.commit.commit?.author?.name ?? '';
+      item.description = date ? `${author} · ${new Date(date).toLocaleString()}` : author;
+      item.tooltip = date ? `${node.commit.commit?.message ?? ''}\n${new Date(date).toLocaleString()}` : node.commit.commit?.message;
+      return item;
+    }
+
     const pullRequest = node.pullRequest;
-    const item = new vscode.TreeItem(`#${pullRequest.number} ${pullRequest.title}`, vscode.TreeItemCollapsibleState.None);
+    const item = new vscode.TreeItem(`#${pullRequest.number} ${pullRequest.title}`, vscode.TreeItemCollapsibleState.Collapsed);
     item.description = pullRequest.user?.username ?? pullRequest.user?.login;
     item.tooltip = pullRequest.body || pullRequest.title;
     item.contextValue = 'pullRequest';
-    if (pullRequest.html_url) {
-      item.command = {
-        command: 'vscode.open',
-        title: vscode.l10n.t('Open Pull Request'),
-        arguments: [vscode.Uri.parse(pullRequest.html_url)],
-      };
-    }
     return item;
   }
 
@@ -199,6 +284,30 @@ class PullRequestTreeProvider implements vscode.TreeDataProvider<PullRequestNode
         { kind: 'group', group: 'open', label: vscode.l10n.t('Open') },
         { kind: 'group', group: 'closed', label: vscode.l10n.t('Closed') },
       ];
+    }
+    if (node.kind === 'pullRequest') {
+      return [
+        { kind: 'details', section: 'files', pullRequest: node.pullRequest },
+        { kind: 'details', section: 'commits', pullRequest: node.pullRequest },
+      ];
+    }
+
+    if (node.kind === 'details') {
+      try {
+        const target = await this.getTarget();
+        const pullRequest = await this.api.getPullRequest(target.owner, target.repo, node.pullRequest.number);
+        if (node.section === 'files') {
+          const files = await this.api.getPullRequestFiles(target.owner, target.repo, pullRequest.number);
+          return files.map((file) => ({ kind: 'file', file, pullRequest, owner: target.owner, repo: target.repo }));
+        }
+        const commits = await this.api.getPullRequestCommits(target.owner, target.repo, pullRequest.number);
+        return commits.map((commit) => ({ kind: 'commit', commit }));
+      } catch (error) {
+        const message = errorMessage(error);
+        void vscode.window.showErrorMessage(vscode.l10n.t('Could not load Pull Request details: {0}', message));
+        this.output.error(vscode.l10n.t('Could not load Pull Request details: {0}', message));
+        return [];
+      }
     }
     if (node.kind !== 'group') return [];
 
@@ -220,6 +329,44 @@ class PullRequestTreeProvider implements vscode.TreeDataProvider<PullRequestNode
     this.output.info(vscode.l10n.t('Refreshing the Pull Request tree.'));
     this.changeEmitter.fire();
   }
+}
+
+class PullRequestFileContentProvider implements vscode.TextDocumentContentProvider {
+  constructor(private readonly api: GiteaPullRequestsApi) {}
+
+  async provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
+    const request = JSON.parse(decodeURIComponent(uri.query)) as { owner: string; repo: string; path: string; sha: string; empty: boolean };
+    if (request.empty) return '';
+    try {
+      return await this.api.getFileContent(request.owner, request.repo, request.path, request.sha);
+    } catch (error) {
+      const message = errorMessage(error);
+      void vscode.window.showErrorMessage(vscode.l10n.t('Could not load Pull Request file for comparison: {0}', message));
+      throw error;
+    }
+  }
+}
+
+function makePullRequestFileUri(
+  owner: string,
+  repo: string,
+  filePath: string,
+  sha: string,
+  side: 'base' | 'head',
+  empty: boolean,
+): vscode.Uri {
+  const identity = {
+    owner,
+    repo,
+    path: filePath,
+    sha,
+    empty,
+  };
+  return vscode.Uri.from({
+    scheme: 'gitea-pr',
+    path: `/${side}/${filePath}`,
+    query: encodeURIComponent(JSON.stringify(identity)),
+  });
 }
 
 class PullRequestFilesProvider implements vscode.TreeDataProvider<string> {
@@ -532,6 +679,19 @@ class PullRequestCommands {
   refresh(): void {
     this.treeProvider.refresh();
   }
+
+  async openInBrowser(node: unknown): Promise<void> {
+    if (!isRecord(node) || node.kind !== 'pullRequest' || !isRecord(node.pullRequest)) return;
+    const url = node.pullRequest.html_url;
+    if (typeof url !== 'string') return;
+    try {
+      const uri = vscode.Uri.parse(url);
+      if (uri.scheme !== 'http' && uri.scheme !== 'https') throw new Error(vscode.l10n.t('The Pull Request URL is invalid.'));
+      await vscode.env.openExternal(uri);
+    } catch (error) {
+      void vscode.window.showErrorMessage(vscode.l10n.t('Could not open Pull Request in browser: {0}', errorMessage(error)));
+    }
+  }
 }
 
 export function registerPullRequestFeatures(
@@ -544,14 +704,17 @@ export function registerPullRequestFeatures(
   const filesProvider = new PullRequestFilesProvider();
   const treeProvider = new PullRequestTreeProvider(api, getTarget, output);
   const formProvider = new PullRequestFormProvider(api, getTarget, filesProvider, output, () => treeProvider.refresh());
+  const fileContentProvider = new PullRequestFileContentProvider(api);
   const commands = new PullRequestCommands(formProvider, treeProvider, output);
 
   context.subscriptions.push(
     vscode.window.registerTreeDataProvider('gitea.pullRequests', treeProvider),
     vscode.window.registerTreeDataProvider('gitea.pullRequestFiles', filesProvider),
     vscode.window.registerWebviewViewProvider('gitea.pullRequestForm', formProvider),
+    vscode.workspace.registerTextDocumentContentProvider('gitea-pr', fileContentProvider),
     vscode.commands.registerCommand('gitea.refreshPullRequests', () => commands.refresh()),
     vscode.commands.registerCommand('gitea.createPullRequest', () => commands.create()),
+    vscode.commands.registerCommand('gitea.openPullRequest', (node: unknown) => commands.openInBrowser(node)),
     formProvider,
     output,
   );

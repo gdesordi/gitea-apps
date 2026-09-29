@@ -38,6 +38,12 @@
         "icon": "$(add)"
       },
       {
+        "command": "gitea.openPullRequest",
+        "title": "%command.openPullRequest.title%",
+        "category": "Gitea",
+        "icon": "$(link-external)"
+      },
+      {
         "command": "gitea.refreshNotifications",
         "title": "%command.refreshNotifications.title%",
         "category": "Gitea",
@@ -119,6 +125,11 @@
         }
       ],
       "view/item/context": [
+        {
+          "command": "gitea.openPullRequest",
+          "when": "view == gitea.pullRequests && viewItem == pullRequest",
+          "group": "inline@1"
+        },
         {
           "command": "gitea.markNotificationAsRead",
           "when": "view == gitea.notifications && viewItem == giteaNotification",

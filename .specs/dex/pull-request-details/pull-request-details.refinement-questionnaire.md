@@ -12,7 +12,7 @@ Responda abaixo de cada pergunta, mantendo a numeração. Respostas curtas são 
 
 Sugestão: exibir a mensagem do commit, autor e data; clicar no commit não executa nenhuma ação.
 
-Resposta:
+Resposta: manter sugestão
 
 #### 1.2 Informações dos arquivos
 
@@ -20,7 +20,7 @@ Resposta:
 
 Sugestão: exibir o caminho do arquivo e seu status na alteração do PR (adicionado, modificado, removido ou renomeado), incluindo o caminho anterior quando renomeado.
 
-Resposta:
+Resposta: manter sugestão
 
 ### 2. Abrir comparação do arquivo
 
@@ -30,7 +30,7 @@ Resposta:
 
 Sugestão: abrir o diff nativo do VS Code entre as versões base e head daquele arquivo no PR, sem incluir mudanças locais não commitadas.
 
-Resposta:
+Resposta: manter sugestão
 
 ### 3. Ação inline do navegador
 
@@ -40,4 +40,4 @@ Resposta:
 
 Sugestão: disponibilizar um ícone de ação inline em cada item de PR, visível na árvore sem expandir o PR; clicar no item ou expandi-lo não abre o navegador.
 
-Resposta:
+Resposta: manter sugestão

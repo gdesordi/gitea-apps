@@ -6,6 +6,7 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ### Adicionado
 
+- Adicionados detalhes expansíveis de commits e arquivos em cada Pull Request, comparação de arquivos no editor e ação inline para abrir o PR no navegador.
 - Adicionada uma view de notificações não lidas com paginação, atualização, abertura do assunto e ação para marcar como lida.
 
 ### Modificado

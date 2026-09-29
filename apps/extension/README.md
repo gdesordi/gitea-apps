@@ -7,6 +7,7 @@ Extensão do Visual Studio Code para acompanhar notificações da conta e Pull R
 - Conectar a extensão a um servidor Gitea usando um token de acesso pessoal.
 - Consultar notificações não lidas da conta Gitea, abrir os assuntos no navegador e marcá-las como lidas.
 - Consultar Pull Requests abertos e fechados do repositório do workspace.
+- Expandir Pull Requests para consultar commits e arquivos alterados e comparar arquivos no editor.
 - Criar um Pull Request a partir da branch atual publicada, escolhendo a branch base e conferindo os arquivos alterados.
 
 ## Começar

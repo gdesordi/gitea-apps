@@ -99,5 +99,19 @@
   "Could not load notifications: {0}": "Não foi possível carregar as notificações: {0}",
   "Could not load more notifications: {0}": "Não foi possível carregar mais notificações: {0}",
   "Could not mark notification as read: {0}": "Não foi possível marcar a notificação como lida: {0}",
-  "No unread notifications.": "Nenhuma notificação não lida."
+  "No unread notifications.": "Nenhuma notificação não lida.",
+  "command.openPullRequest.title": "Abrir Pull Request no navegador",
+  "Files": "Arquivos",
+  "Commits": "Commits",
+  "added": "Adicionado",
+  "modified": "Modificado",
+  "removed": "Removido",
+  "renamed": "Renomeado",
+  "Renamed from {0}": "Renomeado de {0}",
+  "Compare Pull Request File": "Comparar arquivo do Pull Request",
+  "Could not load Pull Request details: {0}": "Não foi possível carregar os detalhes do Pull Request: {0}",
+  "The selected file cannot be displayed as text.": "O arquivo selecionado não pode ser exibido como texto.",
+  "Could not load Pull Request file for comparison: {0}": "Não foi possível carregar o arquivo do Pull Request para comparação: {0}",
+  "Could not open Pull Request in browser: {0}": "Não foi possível abrir o Pull Request no navegador: {0}",
+  "The Pull Request URL is invalid.": "A URL do Pull Request é inválida."
 }
