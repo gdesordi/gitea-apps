@@ -9,5 +9,10 @@
   "view.pullRequestForm.title": "Criar Pull Request",
   "view.pullRequestFiles.title": "Arquivos alterados",
   "command.refreshPullRequests.title": "Atualizar Pull Requests",
-  "command.createPullRequest.title": "Incluir Pull Request"
+  "command.createPullRequest.title": "Incluir Pull Request",
+  "command.refreshNotifications.title": "Atualizar notificações",
+  "command.markNotificationAsRead.title": "Marcar notificação como lida",
+  "command.loadMoreNotifications.title": "Carregar mais notificações",
+  "view.notifications.title": "Notificações",
+  "view.notifications.contextualTitle": "Notificações do Gitea"
 }

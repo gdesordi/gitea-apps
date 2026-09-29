@@ -9,5 +9,10 @@
   "view.pullRequestForm.title": "Create Pull Request",
   "view.pullRequestFiles.title": "Changed Files",
   "command.refreshPullRequests.title": "Refresh Pull Requests",
-  "command.createPullRequest.title": "Add Pull Request"
+  "command.createPullRequest.title": "Add Pull Request",
+  "command.refreshNotifications.title": "Refresh Notifications",
+  "command.markNotificationAsRead.title": "Mark Notification as Read",
+  "command.loadMoreNotifications.title": "Load More Notifications",
+  "view.notifications.title": "Notifications",
+  "view.notifications.contextualTitle": "Gitea Notifications"
 }

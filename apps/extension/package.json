@@ -14,7 +14,9 @@
   "activationEvents": [
     "onCommand:gitea.connectServer",
     "onCommand:gitea.createPullRequest",
-    "onCommand:gitea.refreshPullRequests"
+    "onCommand:gitea.refreshPullRequests",
+    "onCommand:gitea.refreshNotifications",
+    "onView:gitea.notifications"
   ],
   "contributes": {
     "commands": [
@@ -34,6 +36,23 @@
         "title": "%command.createPullRequest.title%",
         "category": "Gitea",
         "icon": "$(add)"
+      },
+      {
+        "command": "gitea.refreshNotifications",
+        "title": "%command.refreshNotifications.title%",
+        "category": "Gitea",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitea.markNotificationAsRead",
+        "title": "%command.markNotificationAsRead.title%",
+        "category": "Gitea",
+        "icon": "$(check)"
+      },
+      {
+        "command": "gitea.loadMoreNotifications",
+        "title": "%command.loadMoreNotifications.title%",
+        "category": "Gitea"
       }
     ],
     "viewsContainers": {
@@ -52,6 +71,13 @@
     },
     "views": {
       "giteaClassicToolkit": [
+        {
+          "id": "gitea.notifications",
+          "name": "%view.notifications.title%",
+          "icon": "$(bell-dot)",
+          "visibility": "visible",
+          "contextualTitle": "%view.notifications.contextualTitle%"
+        },
         {
           "id": "gitea.pullRequests",
           "name": "%view.pullRequests.title%",
@@ -85,6 +111,23 @@
           "command": "gitea.createPullRequest",
           "when": "view == gitea.pullRequests",
           "group": "navigation@2"
+        },
+        {
+          "command": "gitea.refreshNotifications",
+          "when": "view == gitea.notifications",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitea.markNotificationAsRead",
+          "when": "view == gitea.notifications && viewItem == giteaNotification",
+          "group": "inline@1"
+        },
+        {
+          "command": "gitea.markNotificationAsRead",
+          "when": "view == gitea.notifications && viewItem == giteaNotification",
+          "group": "notification@1"
         }
       ]
     }

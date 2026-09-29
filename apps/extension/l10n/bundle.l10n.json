@@ -86,5 +86,18 @@
   "Pull Request form preparation failed: {0}": "Falha ao preparar o formulário de Pull Request: {0}",
   "Resolving workspace repository and origin remote.": "Identificando o repositório do workspace e o remoto origin.",
   "Resolved repository {0}/{1} on {2}, branch {3} ({4}).": "Repositório identificado: {0}/{1} em {2}, branch {3} ({4}).",
-  "Workspace repository resolution failed: {0}": "Falha ao identificar o repositório do workspace: {0}"
+  "Workspace repository resolution failed: {0}": "Falha ao identificar o repositório do workspace: {0}",
+  "The Gitea server returned an invalid notifications response.": "O servidor Gitea retornou uma resposta de notificações inválida.",
+  "Load more notifications": "Carregar mais notificações",
+  "Untitled notification": "Notificação sem título",
+  "Open notification subject": "Abrir assunto da notificação",
+  "Issue": "Issue",
+  "Pull Request": "Pull Request",
+  "Commit": "Commit",
+  "Repository": "Repositório",
+  "Notification": "Notificação",
+  "Could not load notifications: {0}": "Não foi possível carregar as notificações: {0}",
+  "Could not load more notifications: {0}": "Não foi possível carregar mais notificações: {0}",
+  "Could not mark notification as read: {0}": "Não foi possível marcar a notificação como lida: {0}",
+  "No unread notifications.": "Nenhuma notificação não lida."
 }

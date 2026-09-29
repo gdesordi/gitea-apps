@@ -4,6 +4,10 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ## [Não publicado]
 
+### Adicionado
+
+- Adicionada uma view de notificações não lidas com paginação, atualização, abertura do assunto e ação para marcar como lida.
+
 ### Modificado
 
 - Ajustado o ícone Git do container Gitea Classic Toolkit para a Activity Bar do VS Code.

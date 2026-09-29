@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { registerPullRequestFeatures } from './pullRequests';
+import { registerNotificationFeatures } from './notifications';
 
 interface GiteaUser {
   id: number;
@@ -134,6 +135,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('gitea.connectServer', () => command.execute()),
   );
   registerPullRequestFeatures(context, connectionService);
+  registerNotificationFeatures(context, connectionService);
 }
 
 export function deactivate(): void {}

@@ -6,3 +6,4 @@ Este diretório contém briefings, questionários e especificações funcionais 
 
 - [Extensão Gitea para VS Code](gitea-extension/gitea-extension.briefing.md)
 - [Pull Requests](pull-requests/pull-requests.briefing.md)
+- [Notifications](notifications/notifications.briefing.md)
