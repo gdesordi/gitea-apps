@@ -1,0 +1,5 @@
+{
+  "extension.displayName": "Gitea",
+  "extension.description": "Convenience tools for Gitea servers",
+  "command.connectServer.title": "Connect to Gitea Server"
+}

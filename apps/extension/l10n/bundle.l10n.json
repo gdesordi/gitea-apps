@@ -1,0 +1,14 @@
+{
+  "extension.displayName": "Gitea",
+  "extension.description": "Facilitadores para servidores Gitea",
+  "command.connectServer.title": "Conectar servidor Gitea",
+  "Enter the Gitea server address": "Informe o endereço do servidor Gitea",
+  "Enter a personal access token": "Informe um token de acesso pessoal",
+  "Enter a valid HTTP or HTTPS server address.": "Informe um endereço válido de servidor HTTP ou HTTPS.",
+  "A personal access token is required.": "O token de acesso pessoal é obrigatório.",
+  "Connecting to Gitea…": "Conectando ao Gitea…",
+  "Connected to Gitea as {0}.": "Conectado ao Gitea como {0}.",
+  "The personal access token was not accepted. Check the token and try again.": "O token de acesso pessoal não foi aceito. Confira o token e tente novamente.",
+  "Could not reach the Gitea server or read a valid user profile. Check the address and try again.": "Não foi possível acessar o servidor Gitea ou ler um perfil válido. Confira o endereço e tente novamente.",
+  "Try Again": "Tentar novamente"
+}
