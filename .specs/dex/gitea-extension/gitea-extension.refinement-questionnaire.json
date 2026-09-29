@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "feature": "gitea-extension",
+  "title": "Questionário de Refinamento — Extensão Gitea para VS Code",
+  "status": "answered",
+  "questions": [
+    {
+      "id": "1.1",
+      "section": "Conexão ao servidor",
+      "text": "O token pessoal deve ser armazenado para conexões futuras? Isso afeta onde credenciais ficam guardadas e o fluxo após a validação.",
+      "essential": true,
+      "suggestion": "Armazenar o token no armazenamento seguro de segredos do VS Code (SecretStorage), associado ao servidor configurado.",
+      "answer": "manter sugestão"
+    },
+    {
+      "id": "1.2",
+      "section": "Conexão ao servidor",
+      "text": "A extensão deve permitir configurar mais de um servidor Gitea?",
+      "essential": true,
+      "suggestion": "Permitir vários servidores, nomeando-os pelo endereço, e oferecer seleção quando houver mais de um.",
+      "answer": "A princípio não há necessidade."
+    },
+    {
+      "id": "1.3",
+      "section": "Conexão ao servidor",
+      "text": "Qual resposta da API confirma que o endereço e o token são válidos?",
+      "essential": true,
+      "suggestion": "Chamar GET /api/v1/user; considerar válida a conexão somente após resposta HTTP de sucesso e perfil do usuário parseável.",
+      "answer": "manter sugestão"
+    },
+    {
+      "id": "1.4",
+      "section": "Conexão ao servidor",
+      "text": "Como deve ser tratado um erro de rede ou uma resposta de autenticação inválida?",
+      "essential": false,
+      "suggestion": "Exibir mensagem localizada com a causa geral e manter o usuário no fluxo para tentar novamente, sem salvar credenciais inválidas.",
+      "answer": "manter sugestão"
+    }
+  ]
+}

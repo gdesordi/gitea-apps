@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "dex-ai",
+      "repository": "https://github.com/gdesordi/dex-ai",
+      "ref": "main",
+      "path": "skills",
+      "enabled": true
+    }
+  ]
+}

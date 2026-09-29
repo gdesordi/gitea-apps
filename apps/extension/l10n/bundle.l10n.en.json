@@ -1,0 +1,8 @@
+{
+  "extension.displayName": "Gitea",
+  "extension.description": "Convenience tools for Gitea servers",
+  "command.connectServer.title": "Connect to Gitea Server",
+  "Enter the Gitea server address": "Enter the Gitea server address",
+  "Enter a personal access token": "Enter a personal access token",
+  "Connection validation will be implemented after requirements are refined.": "Connection validation will be implemented after requirements are refined."
+}
