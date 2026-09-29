@@ -12,7 +12,9 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:gitea.connectServer"
+    "onCommand:gitea.connectServer",
+    "onCommand:gitea.createPullRequest",
+    "onCommand:gitea.refreshPullRequests"
   ],
   "contributes": {
     "commands": [
@@ -20,8 +22,72 @@
         "command": "gitea.connectServer",
         "title": "%command.connectServer.title%",
         "category": "Gitea"
+      },
+      {
+        "command": "gitea.refreshPullRequests",
+        "title": "%command.refreshPullRequests.title%",
+        "category": "Gitea",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitea.createPullRequest",
+        "title": "%command.createPullRequest.title%",
+        "category": "Gitea",
+        "icon": "$(add)"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "giteaClassicToolkit",
+          "title": "%container.giteaClassicToolkit.title%",
+          "icon": "./git-icon.png"
+        },
+        {
+          "id": "giteaPullRequestCreation",
+          "title": "%container.pullRequestCreation.title%",
+          "icon": "./icons/create-container.svg"
+        }
+      ]
+    },
+    "views": {
+      "giteaClassicToolkit": [
+        {
+          "id": "gitea.pullRequests",
+          "name": "%view.pullRequests.title%",
+          "icon": "./icons/pull-request.svg",
+          "visibility": "visible",
+          "contextualTitle": "%view.pullRequests.contextualTitle%"
+        }
+      ],
+      "giteaPullRequestCreation": [
+        {
+          "id": "gitea.pullRequestForm",
+          "type": "webview",
+          "name": "%view.pullRequestForm.title%",
+          "when": "gitea.pullRequestFormActive"
+        },
+        {
+          "id": "gitea.pullRequestFiles",
+          "name": "%view.pullRequestFiles.title%",
+          "when": "gitea.pullRequestFormActive"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitea.refreshPullRequests",
+          "when": "view == gitea.pullRequests",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitea.createPullRequest",
+          "when": "view == gitea.pullRequests",
+          "group": "navigation@2"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "tsc -p ./",

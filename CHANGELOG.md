@@ -6,6 +6,13 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ### Adicionado
 
+- Adicionadas views para listar e criar Pull Requests, incluindo seleção da branch base e lista de arquivos alterados.
+- Adicionado o canal Output `Gitea Classic Toolkit` com logs do fluxo de criação de Pull Requests.
+- Substituídos os SVGs dos botões do header por ícones de produto do VS Code.
+- Corrigido o fluxo de foco e espera da view de criação de Pull Request, com diagnóstico persistente quando o VS Code não a resolve.
+- Removida a dependência de um comando de foco de view que não é registrado pelo VS Code.
+- Declarado o tipo webview na view de criação de Pull Request para o VS Code resolver o provider correto.
+
 - Workflow do GitHub Actions para empacotar a extensão em VSIX e anexá-la à release ao enviar uma tag de versão.
 - Script de empacotamento da extensão usando `@vscode/vsce`.
 
@@ -16,3 +23,4 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 ### Modificado
 
 - Definida a documentação online oficial como referência da API, sem pendência de cópia local.
+- Renomeada a extensão para Gitea Classic Toolkit.

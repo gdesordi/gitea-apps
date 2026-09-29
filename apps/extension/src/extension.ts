@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { registerPullRequestFeatures } from './pullRequests';
 
 interface GiteaUser {
   id: number;
@@ -62,6 +63,10 @@ class GiteaConnectionService {
 
   getServerAddress(): string | undefined {
     return this.context.globalState.get<string>(GiteaConnectionService.serverUrlKey);
+  }
+
+  async getAccessToken(): Promise<string | undefined> {
+    return await this.context.secrets.get(GiteaConnectionService.tokenSecretKey);
   }
 }
 
@@ -128,6 +133,7 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand('gitea.connectServer', () => command.execute()),
   );
+  registerPullRequestFeatures(context, connectionService);
 }
 
 export function deactivate(): void {}

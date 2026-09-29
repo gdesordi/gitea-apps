@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "feature": "pull-requests",
+  "title": "Questionário de Refinamento — Pull Requests",
+  "status": "answered",
+  "questions": [
+    {
+      "id": "1.1",
+      "section": "Repositório e listagem",
+      "text": "Como a extensão deve identificar o repositório Gitea no qual listar e criar Pull Requests?",
+      "essential": true,
+      "suggestion": "Usar a raiz Git aberta no workspace e seus metadados de origin, reconhecendo URLs HTTPS e SSH do Gitea; se não for possível identificar owner/repository ou o remoto não corresponder ao servidor conectado, informar o problema e não exibir dados de outro repositório.",
+      "answer": "Usar a raiz Git aberta no workspace e seus metadados de origin, reconhecendo URLs HTTPS e SSH do Gitea; se não for possível identificar owner/repository ou o remoto não corresponder ao servidor conectado, informar o problema e não exibir dados de outro repositório."
+    },
+    {
+      "id": "1.2",
+      "section": "Repositório e listagem",
+      "text": "Quais Pull Requests devem aparecer nas listas “Aberto” e “Fechado”, e o que define os 20 mais recentes?",
+      "essential": true,
+      "suggestion": "Listar todos os PRs do repositório em cada estado, ordenando pela data de criação mais recente e limitando cada grupo a 20 itens.",
+      "answer": "Listar todos os PRs do repositório em cada estado, ordenando pela data de criação mais recente e limitando cada grupo a 20 itens."
+    },
+    {
+      "id": "2.1",
+      "section": "Criação de Pull Request",
+      "text": "Qual branch deve ser usada como base do novo PR, e o usuário pode alterá-la?",
+      "essential": true,
+      "suggestion": "Pré-selecionar a branch padrão do repositório e permitir escolher outra branch existente.",
+      "answer": "Pré-selecionar a branch padrão do repositório e permitir escolher outra branch existente."
+    },
+    {
+      "id": "2.2",
+      "section": "Criação de Pull Request",
+      "text": "Qual branch deve ser usada como origem do novo PR?",
+      "essential": true,
+      "suggestion": "Usar a branch atualmente aberta no workspace e permitir criar o PR somente quando ela estiver publicada no remoto associado ao repositório.",
+      "answer": "Usar a branch atualmente aberta no workspace e permitir criar o PR somente quando ela estiver publicada no remoto associado ao repositório."
+    },
+    {
+      "id": "2.3",
+      "section": "Criação de Pull Request",
+      "text": "Como determinar os arquivos que a view deve listar como alterados no PR?",
+      "essential": true,
+      "suggestion": "Mostrar os arquivos na diferença entre as branches remotas de origem e base, sem incluir mudanças locais não commitadas.",
+      "answer": "Mostrar os arquivos na diferença entre as branches remotas de origem e base, sem incluir mudanças locais não commitadas."
+    },
+    {
+      "id": "2.4",
+      "section": "Criação de Pull Request",
+      "text": "A criação deve ser permitida quando houver alterações locais não commitadas na branch de origem?",
+      "essential": true,
+      "suggestion": "Avisar que mudanças não commitadas não farão parte do PR e impedir a criação até que a árvore de trabalho esteja limpa.",
+      "answer": "Avisar que mudanças não commitadas não farão parte do PR e impedir a criação até que a árvore de trabalho esteja limpa."
+    },
+    {
+      "id": "2.5",
+      "section": "Criação de Pull Request",
+      "text": "Quais campos são obrigatórios e quais limites devem ser aplicados ao título e à descrição?",
+      "essential": true,
+      "suggestion": "Título obrigatório e não vazio após remover espaços; descrição opcional; aplicar os limites aceitos pela API da versão-alvo do Gitea.",
+      "answer": "Título obrigatório e não vazio após remover espaços; descrição opcional; aplicar os limites aceitos pela API da versão-alvo do Gitea."
+    },
+    {
+      "id": "3.1",
+      "section": "Fluxo da view de criação",
+      "text": "Como a interface de criação deve ser apresentada no VS Code?",
+      "essential": true,
+      "suggestion": "Apresentar o formulário como uma webview view pertencente ao novo container de criação de PR, dentro do painel de views do VS Code; não abrir arquivo, aba de editor nem painel de webview separado. O comando de inclusão deve revelar e focar esse container e sua view.",
+      "answer": "Apresentar como uma webview view dentro do novo container de criação de PR, no painel de views; não abrir arquivo, aba de editor ou painel separado."
+    },
+    {
+      "id": "3.2",
+      "section": "Fluxo da view de criação",
+      "text": "Como o botão de fechar da view deve se comportar enquanto o formulário está aberto?",
+      "essential": false,
+      "suggestion": "Fechar a view equivale a cancelar, descarta os dados digitados e não cria o PR.",
+      "answer": "Fechar a view equivale a cancelar, descarta os dados digitados e não cria o PR."
+    },
+    {
+      "id": "3.3",
+      "section": "Fluxo da view de criação",
+      "text": "Como a extensão deve se comportar se a API rejeitar a criação ou houver falha de rede?",
+      "essential": false,
+      "suggestion": "Exibir uma mensagem localizada com a causa geral, manter o formulário e os valores preenchidos para correção ou nova tentativa, e manter a view aberta.",
+      "answer": "Exibir uma mensagem localizada com a causa geral, manter o formulário e os valores preenchidos para correção ou nova tentativa, e manter a view aberta."
+    }
+  ]
+}

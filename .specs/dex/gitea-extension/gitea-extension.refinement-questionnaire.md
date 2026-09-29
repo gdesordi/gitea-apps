@@ -37,3 +37,53 @@ Como deve ser tratado um erro de rede ou uma resposta de autenticação inválid
 Sugestão: exibir mensagem localizada com a causa geral e manter o usuário no fluxo para tentar novamente, sem salvar credenciais inválidas.
 
 Resposta: manter sugestão
+
+### 2. Navegação de Pull Requests
+
+#### 2.1 Repositório-alvo
+
+**Essencial** — Como a extensão deve identificar o repositório Gitea no qual listar e criar Pull Requests?
+
+Sugestão: usar a raiz Git aberta no workspace e seus metadados de `origin`, reconhecendo URLs HTTPS e SSH do Gitea; caso não seja possível identificar owner/repository ou o remoto não corresponda ao servidor conectado, informar o problema e não exibir dados de outro repositório.
+
+Resposta:
+
+#### 2.2 Escopo das listas
+
+**Essencial** — As listas “Aberto” e “Fechado” devem incluir Pull Requests de qual autoria/participação?
+
+Sugestão: listar todos os PRs do repositório, abertos ou fechados conforme o grupo, ordenados pelos mais recentes e limitados a 20 em cada grupo.
+
+Resposta:
+
+#### 2.3 Base do novo Pull Request
+
+**Essencial** — Qual branch deve ser usada como base, e como o usuário poderá alterá-la?
+
+Sugestão: pré-selecionar a branch padrão do repositório e permitir escolher outra branch existente em um seletor da webview.
+
+Resposta:
+
+#### 2.4 Branch de origem
+
+**Essencial** — Qual branch local deve ser enviada como branch de origem do novo PR?
+
+Sugestão: usar a branch atualmente aberta no workspace; permitir criar o PR apenas se ela estiver publicada no remoto associado ao repositório.
+
+Resposta:
+
+#### 2.5 Alterações locais dos arquivos
+
+**Essencial** — Como tratar arquivos modificados localmente que ainda não foram commitados ao criar o PR?
+
+Sugestão: a lista de arquivos deve refletir as diferenças entre as branches remotas de origem e base, sem incluir mudanças não commitadas; avisar e impedir a criação enquanto houver alterações locais na branch de origem.
+
+Resposta:
+
+#### 2.6 Cancelamento e fechamento do formulário
+
+Como tratar o botão de fechar da view de criação enquanto o formulário está aberto?
+
+Sugestão: fechar a view equivale a cancelar; não criar o PR e descartar os dados digitados.
+
+Resposta:
