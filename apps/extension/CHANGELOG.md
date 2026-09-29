@@ -6,7 +6,7 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ### Modificado
 
-- Recriado em SVG o ícone Git usado no container Gitea Classic Toolkit.
+- Ajustado o ícone Git do container Gitea Classic Toolkit para a Activity Bar do VS Code.
 
 ## [0.0.2] - 2026-09
 
