@@ -4,6 +4,8 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ## [Não publicado]
 
+## [0.1.0] - 2026-09
+
 ### Adicionado
 
 - Adicionados detalhes expansíveis de commits e arquivos em cada Pull Request, comparação de arquivos no editor e ação inline para abrir o PR no navegador.
