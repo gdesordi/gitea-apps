@@ -145,6 +145,7 @@
   },
   "scripts": {
     "compile": "tsc -p ./",
+    "test": "tsc -p ./tsconfig.test.json && node --test /tmp/gitea-vscode-extension-tests/test/*.test.js",
     "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run compile",
     "package": "vsce package"

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { ensureTrailingSlash, isNotificationThread, isSafeHttpUrl } from './core';
 
 interface NotificationThread {
   id: number | string;
@@ -221,27 +222,6 @@ function notificationType(type: string | undefined): string {
 function formatDate(value: string): string | undefined {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? undefined : new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(date);
-}
-
-function isSafeHttpUrl(value: string): boolean {
-  try {
-    const url = new URL(value);
-    return url.protocol === 'http:' || url.protocol === 'https:';
-  } catch {
-    return false;
-  }
-}
-
-function isNotificationThread(value: unknown): value is NotificationThread {
-  if (typeof value !== 'object' || value === null) return false;
-  const thread = value as Record<string, unknown>;
-  return (typeof thread.id === 'number' || typeof thread.id === 'string') && typeof thread.id !== 'undefined';
-}
-
-function ensureTrailingSlash(url: URL): URL {
-  const normalized = new URL(url.toString());
-  if (!normalized.pathname.endsWith('/')) normalized.pathname += '/';
-  return normalized;
 }
 
 function errorMessage(error: unknown): string {

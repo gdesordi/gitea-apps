@@ -1,14 +1,10 @@
 import * as vscode from 'vscode';
 import { registerPullRequestFeatures } from './pullRequests';
 import { registerNotificationFeatures } from './notifications';
-
-interface GiteaUser {
-  id: number;
-  username: string;
-}
+import { ensureTrailingSlash, isGiteaUser, parseServerUrl } from './core';
 
 type ValidationResult =
-  | { kind: 'valid'; user: GiteaUser }
+  | { kind: 'valid'; user: { id: number; username: string } }
   | { kind: 'unauthorized' }
   | { kind: 'unavailable' };
 
@@ -139,29 +135,3 @@ export function activate(context: vscode.ExtensionContext): void {
 }
 
 export function deactivate(): void {}
-
-function parseServerUrl(input: string): URL | undefined {
-  try {
-    const url = new URL(input.trim());
-    if ((url.protocol !== 'https:' && url.protocol !== 'http:') || !url.hostname || url.username || url.password) {
-      return undefined;
-    }
-    url.search = '';
-    url.hash = '';
-    return url;
-  } catch {
-    return undefined;
-  }
-}
-
-function ensureTrailingSlash(url: URL): URL {
-  const normalized = new URL(url.toString());
-  if (!normalized.pathname.endsWith('/')) normalized.pathname += '/';
-  return normalized;
-}
-
-function isGiteaUser(value: unknown): value is GiteaUser {
-  if (typeof value !== 'object' || value === null) return false;
-  const user = value as Record<string, unknown>;
-  return Number.isInteger(user.id) && typeof user.username === 'string' && user.username.length > 0;
-}

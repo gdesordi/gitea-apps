@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { execFile } from 'node:child_process';
 import { basename } from 'node:path';
 import { promisify } from 'node:util';
+import { ensureTrailingSlash, escapeHtml, parseRemoteRepository } from './core';
 
 const execFileAsync = promisify(execFile);
 const createFormContextKey = 'gitea.pullRequestFormActive';
@@ -763,33 +764,6 @@ function createRepositoryTargetResolver(
   };
 }
 
-function parseRemoteRepository(remote: string): { host: string; pathPrefix: string; owner: string; repo: string } | undefined {
-  let host: string;
-  let pathname: string;
-  try {
-    if (/^[^/@:]+@[^/:]+:/.test(remote)) {
-      const match = remote.match(/^[^/@:]+@([^/:]+):(.+)$/);
-      if (!match) return undefined;
-      host = match[1];
-      pathname = `/${match[2]}`;
-    } else {
-      const url = new URL(remote);
-      if (url.protocol !== 'https:' && url.protocol !== 'http:' && url.protocol !== 'ssh:') return undefined;
-      host = url.host;
-      pathname = url.pathname;
-    }
-  } catch {
-    return undefined;
-  }
-  pathname = pathname.replace(/\.git$/i, '').replace(/\/$/, '');
-  const parts = pathname.split('/').filter(Boolean);
-  if (parts.length < 2) return undefined;
-  const owner = parts.at(-2);
-  const repo = parts.at(-1);
-  const pathPrefix = parts.length > 2 ? `/${parts.slice(0, -2).join('/')}` : '';
-  return owner && repo ? { host, pathPrefix, owner, repo } : undefined;
-}
-
 async function getChangedFiles(target: RepositoryTarget, baseBranch: string): Promise<string[]> {
   const baseRef = `refs/remotes/${target.remoteName}/${baseBranch}`;
   const headRef = `refs/remotes/${target.remoteName}/${target.currentBranch}`;
@@ -826,28 +800,12 @@ async function git(root: string, args: string[], allowFailure = false): Promise<
   }
 }
 
-function ensureTrailingSlash(url: URL): URL {
-  const normalized = new URL(url.toString());
-  if (!normalized.pathname.endsWith('/')) normalized.pathname += '/';
-  return normalized;
-}
-
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (character) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  })[character] ?? character);
 }
 
 function createNonce(): string {
