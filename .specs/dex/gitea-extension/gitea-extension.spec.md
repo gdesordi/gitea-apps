@@ -7,7 +7,7 @@ Oferecer facilitadores de uso do Gitea por meio de uma extensão para Visual Stu
 ## Referências
 
 - [Briefing](gitea-extension.briefing.md)
-- [Contrato Swagger oficial para Gitea 1.14.7](https://github.com/go-gitea/gitea/blob/v1.14.7/public/swagger.v1.json); cópia local planejada em `doc/api/gitea-1.14.7.swagger.json`.
+- [Contrato Swagger oficial para Gitea 1.14.7](https://github.com/go-gitea/gitea/blob/v1.14.7/public/swagger.v1.json) (referência online; não há cópia local).
 
 ## Escopo
 
@@ -72,8 +72,4 @@ Oferecer facilitadores de uso do Gitea por meio de uma extensão para Visual Stu
 - Usar `SecretStorage` para persistir token de acesso pessoal.
 - Usar `GET /api/v1/user` para validar credenciais e servidor.
 - Desenvolver em Node.js 24 com TypeScript.
-- O contrato Swagger 2.0 oficial da tag `v1.14.7` é a referência de integração. A cópia local está pendente de acesso à rede.
-
-## Pendências
-
-- Baixar a especificação Swagger 2.0 oficial da tag `v1.14.7` para `doc/api` quando houver acesso à rede.
+- O contrato Swagger 2.0 oficial da tag `v1.14.7` é a referência online de integração e deve ser consultado antes de implementar integrações com Gitea. Não se mantém cópia local.

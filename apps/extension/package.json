@@ -7,8 +7,9 @@
   "engines": {
     "vscode": "^1.90.0"
   },
-  "categories": ["Other"],
-  "activationEvents": ["onCommand:gitea.connectServer"],
+  "categories": [
+    "Other"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -17,8 +18,7 @@
         "title": "%command.connectServer.title%",
         "category": "Gitea"
       }
-    ],
-    "localization": "./l10n"
+    ]
   },
   "scripts": {
     "compile": "tsc -p ./",

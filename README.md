@@ -5,7 +5,7 @@ Projeto para desenvolver facilitadores de uso do Gitea. O suporte inicial será 
 ## Estrutura
 
 - `apps/extension`: extensão para Visual Studio Code.
-- `doc/api`: documentação versionada da API do Gitea.
+- `doc/api`: links para a documentação online versionada da API do Gitea; o contrato não é copiado localmente.
 - `.specs/dex`: briefings, refinamentos e especificações das features.
 
 ## Desenvolvimento

@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Gitea Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "noDebug": true,
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/apps/extension"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/apps/extension/out/**/*.js"
+      ],
+      "preLaunchTask": "Compile Gitea Extension",
+      "stopOnEntry": false,
+      "timeout": 30000
+    }
+  ]
+}

@@ -1,1 +1,5 @@
 .agents/skills/
+
+# Generated extension dependencies and build output
+apps/extension/node_modules/
+apps/extension/out/
