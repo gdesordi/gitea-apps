@@ -4,6 +4,12 @@ Este projeto segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ## [Não publicado]
 
+## [0.1.1] - 2026-09
+
+### Corrigido
+
+- Corrigida a detecção do repositório no empacotamento da extensão, mantendo os links do README válidos no VSIX.
+
 ## [0.1.0] - 2026-09
 
 ### Adicionado
