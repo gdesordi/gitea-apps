@@ -4,6 +4,16 @@
   "description": "%extension.description%",
   "version": "0.1.0",
   "publisher": "gdesordi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gdesordi/gitea-apps.git",
+    "directory": "apps/extension"
+  },
+  "bugs": {
+    "url": "https://github.com/gdesordi/gitea-apps/issues"
+  },
+  "homepage": "https://github.com/gdesordi/gitea-apps/tree/main/apps/extension#readme",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.90.0"
   },
