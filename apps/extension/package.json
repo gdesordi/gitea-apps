@@ -9,6 +9,8 @@
     "url": "https://github.com/gdesordi/gitea-apps.git",
     "directory": "apps/extension"
   },
+  "baseContentUrl": "https://github.com/gdesordi/gitea-apps/blob/main/apps/extension",
+  "baseImagesUrl": "https://github.com/gdesordi/gitea-apps/raw/main/apps/extension",
   "bugs": {
     "url": "https://github.com/gdesordi/gitea-apps/issues"
   },
