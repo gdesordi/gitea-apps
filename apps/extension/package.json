@@ -2,8 +2,20 @@
   "name": "gitea-vscode-extension",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "publisher": "gdesordi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gdesordi/gitea-apps.git",
+    "directory": "apps/extension"
+  },
+  "baseContentUrl": "https://github.com/gdesordi/gitea-apps/blob/main/apps/extension",
+  "baseImagesUrl": "https://github.com/gdesordi/gitea-apps/raw/main/apps/extension",
+  "bugs": {
+    "url": "https://github.com/gdesordi/gitea-apps/issues"
+  },
+  "homepage": "https://github.com/gdesordi/gitea-apps/tree/main/apps/extension#readme",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -12,7 +24,11 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:gitea.connectServer"
+    "onCommand:gitea.connectServer",
+    "onCommand:gitea.createPullRequest",
+    "onCommand:gitea.refreshPullRequests",
+    "onCommand:gitea.refreshNotifications",
+    "onView:gitea.notifications"
   ],
   "contributes": {
     "commands": [
@@ -20,11 +36,128 @@
         "command": "gitea.connectServer",
         "title": "%command.connectServer.title%",
         "category": "Gitea"
+      },
+      {
+        "command": "gitea.refreshPullRequests",
+        "title": "%command.refreshPullRequests.title%",
+        "category": "Gitea",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitea.createPullRequest",
+        "title": "%command.createPullRequest.title%",
+        "category": "Gitea",
+        "icon": "$(add)"
+      },
+      {
+        "command": "gitea.openPullRequest",
+        "title": "%command.openPullRequest.title%",
+        "category": "Gitea",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "gitea.refreshNotifications",
+        "title": "%command.refreshNotifications.title%",
+        "category": "Gitea",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitea.markNotificationAsRead",
+        "title": "%command.markNotificationAsRead.title%",
+        "category": "Gitea",
+        "icon": "$(check)"
+      },
+      {
+        "command": "gitea.loadMoreNotifications",
+        "title": "%command.loadMoreNotifications.title%",
+        "category": "Gitea"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "giteaClassicToolkit",
+          "title": "%container.giteaClassicToolkit.title%",
+          "icon": "./icons/git-icon.svg"
+        },
+        {
+          "id": "giteaPullRequestCreation",
+          "title": "%container.pullRequestCreation.title%",
+          "icon": "./icons/create-container.svg"
+        }
+      ]
+    },
+    "views": {
+      "giteaClassicToolkit": [
+        {
+          "id": "gitea.notifications",
+          "name": "%view.notifications.title%",
+          "icon": "$(bell-dot)",
+          "visibility": "visible",
+          "contextualTitle": "%view.notifications.contextualTitle%"
+        },
+        {
+          "id": "gitea.pullRequests",
+          "name": "%view.pullRequests.title%",
+          "icon": "./icons/pull-request.svg",
+          "visibility": "visible",
+          "contextualTitle": "%view.pullRequests.contextualTitle%"
+        }
+      ],
+      "giteaPullRequestCreation": [
+        {
+          "id": "gitea.pullRequestForm",
+          "type": "webview",
+          "name": "%view.pullRequestForm.title%",
+          "when": "gitea.pullRequestFormActive"
+        },
+        {
+          "id": "gitea.pullRequestFiles",
+          "name": "%view.pullRequestFiles.title%",
+          "when": "gitea.pullRequestFormActive"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitea.refreshPullRequests",
+          "when": "view == gitea.pullRequests",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitea.createPullRequest",
+          "when": "view == gitea.pullRequests",
+          "group": "navigation@2"
+        },
+        {
+          "command": "gitea.refreshNotifications",
+          "when": "view == gitea.notifications",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitea.openPullRequest",
+          "when": "view == gitea.pullRequests && viewItem == pullRequest",
+          "group": "inline@1"
+        },
+        {
+          "command": "gitea.markNotificationAsRead",
+          "when": "view == gitea.notifications && viewItem == giteaNotification",
+          "group": "inline@1"
+        },
+        {
+          "command": "gitea.markNotificationAsRead",
+          "when": "view == gitea.notifications && viewItem == giteaNotification",
+          "group": "notification@1"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "tsc -p ./",
+    "test": "tsc -p ./tsconfig.test.json && node --test /tmp/gitea-vscode-extension-tests/test/*.test.js",
     "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run compile",
     "package": "vsce package"

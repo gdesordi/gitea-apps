@@ -1,5 +1,19 @@
 {
-  "extension.displayName": "Gitea",
+  "extension.displayName": "Gitea Classic Toolkit",
   "extension.description": "Facilitadores para servidores Gitea",
-  "command.connectServer.title": "Conectar servidor Gitea"
+  "command.connectServer.title": "Conectar servidor Gitea",
+  "container.giteaClassicToolkit.title": "Gitea Classic Toolkit",
+  "container.pullRequestCreation.title": "Criar Pull Request",
+  "view.pullRequests.title": "Pull Requests",
+  "view.pullRequests.contextualTitle": "Pull Requests do Gitea",
+  "view.pullRequestForm.title": "Criar Pull Request",
+  "view.pullRequestFiles.title": "Arquivos alterados",
+  "command.refreshPullRequests.title": "Atualizar Pull Requests",
+  "command.createPullRequest.title": "Incluir Pull Request",
+  "command.refreshNotifications.title": "Atualizar notificações",
+  "command.markNotificationAsRead.title": "Marcar notificação como lida",
+  "command.loadMoreNotifications.title": "Carregar mais notificações",
+  "view.notifications.title": "Notificações",
+  "view.notifications.contextualTitle": "Notificações do Gitea",
+  "command.openPullRequest.title": "Abrir Pull Request no navegador"
 }

@@ -3,3 +3,4 @@
 # Generated extension dependencies and build output
 apps/extension/node_modules/
 apps/extension/out/
+apps/extension/.DS_Store

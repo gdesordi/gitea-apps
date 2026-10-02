@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "feature": "pull-request-details",
+  "title": "Questionário de Refinamento — Detalhes do PR",
+  "status": "answered",
+  "questions": [
+    {
+      "id": "1.1",
+      "section": "Conteúdo dos detalhes",
+      "text": "Quais informações devem aparecer em cada commit listado dentro do PR?",
+      "essential": true,
+      "suggestion": "Exibir a mensagem do commit, autor e data; clicar no commit não executa nenhuma ação.",
+      "answer": "manter sugestão"
+    },
+    {
+      "id": "1.2",
+      "section": "Conteúdo dos detalhes",
+      "text": "Quais informações devem aparecer em cada arquivo alterado?",
+      "essential": true,
+      "suggestion": "Exibir o caminho do arquivo e seu status na alteração do PR (adicionado, modificado, removido ou renomeado), incluindo o caminho anterior quando renomeado.",
+      "answer": "manter sugestão"
+    },
+    {
+      "id": "2.1",
+      "section": "Abrir comparação do arquivo",
+      "text": "Em que interface deve abrir a comparação ao selecionar um arquivo, e quais versões devem ser comparadas?",
+      "essential": true,
+      "suggestion": "Abrir o diff nativo do VS Code entre as versões base e head daquele arquivo no PR, sem incluir mudanças locais não commitadas.",
+      "answer": "manter sugestão"
+    },
+    {
+      "id": "3.1",
+      "section": "Ação inline do navegador",
+      "text": "Onde deve aparecer a ação inline que abre o PR no navegador?",
+      "essential": true,
+      "suggestion": "Disponibilizar um ícone de ação inline em cada item de PR, visível na árvore sem expandir o PR; clicar no item ou expandi-lo não abre o navegador.",
+      "answer": "manter sugestão"
+    }
+  ]
+}

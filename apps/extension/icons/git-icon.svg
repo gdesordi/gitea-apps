@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="160 160 934 934">
+  <defs>
+    <mask id="git-cutouts" maskUnits="userSpaceOnUse" x="160" y="160" width="934" height="934" style="mask-type:luminance">
+      <rect x="160" y="160" width="934" height="934" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="54">
+        <path d="M471 345 624 460 804 643"/>
+        <path d="M624 460V821"/>
+      </g>
+      <g fill="#000">
+        <circle cx="624" cy="460" r="69"/>
+        <circle cx="804" cy="643" r="69"/>
+        <circle cx="624" cy="821" r="70"/>
+      </g>
+    </mask>
+  </defs>
+  <path fill="currentColor" mask="url(#git-cutouts)" d="M583 239 Q626 202 669 239 L1029 593 Q1065 633 1029 673 L668 1031 Q626 1067 584 1031 L224 674 Q188 634 224 594 Z"/>
+</svg>

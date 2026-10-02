@@ -1,12 +1,10 @@
 import * as vscode from 'vscode';
-
-interface GiteaUser {
-  id: number;
-  username: string;
-}
+import { registerPullRequestFeatures } from './pullRequests';
+import { registerNotificationFeatures } from './notifications';
+import { ensureTrailingSlash, isGiteaUser, parseServerUrl } from './core';
 
 type ValidationResult =
-  | { kind: 'valid'; user: GiteaUser }
+  | { kind: 'valid'; user: { id: number; username: string } }
   | { kind: 'unauthorized' }
   | { kind: 'unavailable' };
 
@@ -62,6 +60,10 @@ class GiteaConnectionService {
 
   getServerAddress(): string | undefined {
     return this.context.globalState.get<string>(GiteaConnectionService.serverUrlKey);
+  }
+
+  async getAccessToken(): Promise<string | undefined> {
+    return await this.context.secrets.get(GiteaConnectionService.tokenSecretKey);
   }
 }
 
@@ -128,32 +130,8 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand('gitea.connectServer', () => command.execute()),
   );
+  registerPullRequestFeatures(context, connectionService);
+  registerNotificationFeatures(context, connectionService);
 }
 
 export function deactivate(): void {}
-
-function parseServerUrl(input: string): URL | undefined {
-  try {
-    const url = new URL(input.trim());
-    if ((url.protocol !== 'https:' && url.protocol !== 'http:') || !url.hostname || url.username || url.password) {
-      return undefined;
-    }
-    url.search = '';
-    url.hash = '';
-    return url;
-  } catch {
-    return undefined;
-  }
-}
-
-function ensureTrailingSlash(url: URL): URL {
-  const normalized = new URL(url.toString());
-  if (!normalized.pathname.endsWith('/')) normalized.pathname += '/';
-  return normalized;
-}
-
-function isGiteaUser(value: unknown): value is GiteaUser {
-  if (typeof value !== 'object' || value === null) return false;
-  const user = value as Record<string, unknown>;
-  return Number.isInteger(user.id) && typeof user.username === 'string' && user.username.length > 0;
-}
